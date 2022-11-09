@@ -2,21 +2,23 @@ import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import AppLoading from "expo-app-loading";
+import { useFonts, Roboto_400Regular } from "@expo-google-fonts/roboto";
 import {
-  useFonts,
-  Roboto_400Regular,
-  Roboto_500Medium,
-} from "@expo-google-fonts/roboto";
-import { Rubik_400Regular } from "@expo-google-fonts/rubik";
+  Poppins_400Regular,
+  Poppins_500Medium,
+} from "@expo-google-fonts/poppins";
 import { ThemeProvider } from "styled-components";
-import { theme } from "./src/theme/index";
+import { theme as themeData } from "./src/theme/index";
 import { NavigationContainer } from "@react-navigation/native";
+import PageHeader from "./src/components/PageHeader";
+import Home from "./src/pages/App/Home";
+import Login from "./src/pages/Auth/Login";
 
 export default function App() {
   let [fontsLoaded] = useFonts({
     Roboto_400Regular,
-    Roboto_500Medium,
-    Rubik_400Regular,
+    Poppins_400Regular,
+    Poppins_500Medium,
   });
 
   if (!fontsLoaded) {
@@ -24,22 +26,12 @@ export default function App() {
   } else {
     return (
       <NavigationContainer>
-        <ThemeProvider theme={theme}>
-          <View style={styles.container}>
-            <Text>Open up App.js to start working on your app!</Text>
-            <StatusBar style="auto" />
-          </View>
+        <ThemeProvider theme={themeData}>
+          <StatusBar style="light" backgroundColor={themeData.colors.purple} />
+          {/* <Home /> */}
+          <Login />
         </ThemeProvider>
       </NavigationContainer>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
