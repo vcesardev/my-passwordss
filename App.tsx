@@ -13,6 +13,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import PageHeader from "./src/components/PageHeader";
 import Home from "./src/pages/App/Home";
 import Login from "./src/pages/Auth/Login";
+import { AuthProvider, useAuth } from "./src/hooks/auth";
+import Router from "./src/routes";
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -26,11 +28,16 @@ export default function App() {
   } else {
     return (
       <NavigationContainer>
-        <ThemeProvider theme={themeData}>
-          <StatusBar style="light" backgroundColor={themeData.colors.purple} />
-          {/* <Home /> */}
-          <Login />
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider theme={themeData}>
+            <StatusBar
+              style="light"
+              backgroundColor={themeData.colors.purple}
+            />
+
+            <Router />
+          </ThemeProvider>
+        </AuthProvider>
       </NavigationContainer>
     );
   }
