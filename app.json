@@ -1,10 +1,14 @@
 {
   "expo": {
+    "scheme":"mypasswords",
     "name": "my-passwords",
     "slug": "my-passwords",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "android": {
+      "package": "com.mypasswords"
+    }
   }
 }
