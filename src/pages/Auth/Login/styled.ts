@@ -1,4 +1,5 @@
 import styled from "styled-components/native";
+import LottieView from "lottie-react-native";
 import TextH1 from "../../../components/TextH1";
 import {
   fontScale,
@@ -41,7 +42,7 @@ export const LoginHeaderContainer = styled.View`
 `;
 
 export const LoginHeaderLabel = styled(TextH1)`
-  font-family: ${({ theme }) => theme.fonts.primary.medium};
+  font-family: ${({ theme }) => theme.fonts.primary.regular};
   font-size: ${fontScale(18)}px;
 `;
 
@@ -67,4 +68,10 @@ export const LoginButton = styled.TouchableOpacity`
 
 export const LoginButtonText = styled(TextH1)`
   color: ${({ theme }) => theme.colors.white};
+`;
+
+export const PasswordAnimation = styled(LottieView)`
+  align-self: center;
+  width: ${widthPercentageToDP("55%")}px;
+  height: ${widthPercentageToDP("55%")}px;
 `;
