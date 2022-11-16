@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useRef } from "react";
 import { View } from "react-native";
 import SafeKAV from "../../../components/SafeKAV";
 import LoginInput from "./components/LoginInput";
+import LottieView from "lottie-react-native";
 
 import * as Google from "expo-auth-session/providers/google";
 
@@ -12,6 +13,7 @@ import { useAuth } from "../../../hooks/auth";
 
 const Login: React.FC = () => {
   const { signIn } = useAuth();
+  const animation = useRef(null);
   const [request, response, promptAsync] = Google.useAuthRequest({
     expoClientId:
       "573714968934-9s4k2n1hr7tg2vud7jrq5mrqa6nhk69m.apps.googleusercontent.com",
@@ -54,22 +56,24 @@ const Login: React.FC = () => {
           </Styled.HeaderSubheading>
         </Styled.HeaderContainer>
 
-        <Styled.LoginHeaderContainer>
-          <Styled.LoginHeaderLabel>Fazer login</Styled.LoginHeaderLabel>
-          <Styled.CreateAccountText>Criar uma conta</Styled.CreateAccountText>
-        </Styled.LoginHeaderContainer>
+        <Styled.PasswordAnimation
+          autoPlay
+          ref={animation}
+          source={require("../../../assets/animations/password-animation.json")}
+        />
 
-        <Styled.InputsContainer>
-          <LoginInput />
-          <LoginInput />
-        </Styled.InputsContainer>
+        <Styled.LoginHeaderContainer>
+          <Styled.LoginHeaderLabel>
+            Faça login com as opções abaixo para salvar as suas senhas
+          </Styled.LoginHeaderLabel>
+        </Styled.LoginHeaderContainer>
 
         <Styled.LoginButton
           onPress={() => {
             promptAsync();
           }}
         >
-          <Styled.LoginButtonText>Entrar</Styled.LoginButtonText>
+          <Styled.LoginButtonText>Entrar com Google</Styled.LoginButtonText>
         </Styled.LoginButton>
       </Styled.Container>
     </SafeKAV>

@@ -2,6 +2,7 @@ import React, { useState, useContext, createContext } from "react";
 import axios from "axios";
 import { TokenResponse } from "expo-auth-session";
 import { User } from "../models/User";
+import * as LocalAuthenticate from "expo-local-authentication";
 
 type AuthProps = {
   user: User;
@@ -21,18 +22,34 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState<User>({} as User);
 
+  const handleFingerprintAuthentication = async (data: User): Promise<void> => {
+    try {
+      const response = await LocalAuthenticate.authenticateAsync({
+        promptMessage: "Confirme sua identidade!",
+      });
+      if (response.success) {
+        setUserData(data);
+        setLoading(false);
+      }
+    } catch (err) {
+      throw new Error("Erro ao autenticar com biometria.");
+    }
+  };
+
   const signIn = async (authenticationData: TokenResponse): Promise<void> => {
     setLoading(true);
     try {
-      const { data } = await axios({
+      const response = await axios({
         method: "get",
         url: "https://www.googleapis.com/oauth2/v2/userinfo",
         headers: {
           Authorization: `Bearer ${authenticationData.accessToken}`,
         },
       });
-      setUserData(data);
-      setLoading(false);
+      const data: User = response.data;
+      if (data) {
+        handleFingerprintAuthentication(data);
+      }
     } catch (err) {
       setLoading(false);
       return;
