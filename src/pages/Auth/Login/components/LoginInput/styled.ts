@@ -12,7 +12,11 @@ type LoginInputProps = {
   isFocused: boolean;
 };
 
-export const Container = styled.TouchableOpacity`
+type LoginContainerProps = {
+  multiline: boolean;
+};
+
+export const Container = styled.TouchableOpacity<LoginContainerProps>`
   align-self: center;
   justify-content: center;
   background-color: ${({ theme }) => theme.colors.white};
@@ -20,7 +24,8 @@ export const Container = styled.TouchableOpacity`
   border-radius: ${widthPercentageToDP("3%")}px;
   padding: 0 ${widthPercentageToDP("5%")}px;
   width: 90%;
-  height: ${heightPercentageToDP("9%")}px;
+  height: ${({ multiline }) =>
+    heightPercentageToDP(multiline ? "15%" : "9%")}px;
 `;
 
 export const InputLabel = styled(Animated.Text)<LoginInputProps>`

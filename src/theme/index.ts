@@ -1,6 +1,7 @@
 type Colors = {
   purple: string;
   border: string;
+  black: string;
   pink: string;
   green: string;
   background: string;
@@ -28,6 +29,7 @@ export type Theme = {
 
 const colors: Colors = {
   background: "#F0EDF5",
+  black: "#000000",
   border: "#E6E6F0",
   base: "#6C6C80",
   details: "#A0A0B2",
