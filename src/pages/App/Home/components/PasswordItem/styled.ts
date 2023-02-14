@@ -16,7 +16,8 @@ export const Container = styled.TouchableOpacity`
   justify-content: space-between;
   padding: ${heightPercentageToDP("2%")}px;
   margin-bottom: ${heightPercentageToDP("2%")}px;
-  width: 45%;
+  margin-right: ${widthPercentageToDP("10%")}px;
+  width: 44%;
 `;
 
 export const Label = styled(TextH1)`
