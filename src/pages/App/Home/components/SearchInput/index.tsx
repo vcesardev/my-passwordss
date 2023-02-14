@@ -1,10 +1,17 @@
 import React from "react";
-import { View } from "react-native";
+import { TextInputProps } from "react-native";
 import { useTheme } from "styled-components";
 
 import * as Styled from "./styled";
 
-const SearchInput: React.FC = () => {
+type SearchInputProps = TextInputProps & {
+  onPressSearch: () => void;
+};
+
+const SearchInput: React.FC<SearchInputProps> = ({
+  onPressSearch,
+  ...props
+}) => {
   const theme = useTheme();
 
   return (
@@ -13,9 +20,10 @@ const SearchInput: React.FC = () => {
         <Styled.SearchInput
           placeholder="Busque uma senha"
           placeholderTextColor={theme.colors.inputs}
+          {...props}
         />
 
-        <Styled.SearchIcon fill={theme.colors.inputs} />
+        <Styled.SearchIcon fill={theme.colors.inputs} onPress={onPressSearch} />
       </Styled.SearchInputContainer>
     </Styled.Container>
   );

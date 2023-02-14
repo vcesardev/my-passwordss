@@ -1,8 +1,15 @@
-import React, { useState, useContext, createContext } from "react";
+import React, {
+  useState,
+  useContext,
+  createContext,
+  useCallback,
+  useEffect,
+} from "react";
 import axios from "axios";
 import { TokenResponse } from "expo-auth-session";
 import { User } from "../models/User";
 import * as LocalAuthenticate from "expo-local-authentication";
+import { retrieveUserData, storeUserData } from "../utils/store";
 
 type AuthProps = {
   user: User;
@@ -28,6 +35,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         promptMessage: "Confirme sua identidade!",
       });
       if (response.success) {
+        await storeUserData(data);
         setUserData(data);
         setLoading(false);
       }
@@ -55,6 +63,26 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       return;
     }
   };
+
+  const loadUserStorage = useCallback(async () => {
+    try {
+      setLoading(true);
+      const data = await retrieveUserData();
+
+      if (data) {
+        await storeUserData(data);
+
+        setUserData(data);
+      }
+    } catch (err: any) {
+      console.log(err);
+    }
+    setLoading(false);
+  }, []);
+
+  useEffect(() => {
+    loadUserStorage();
+  }, [loadUserStorage]);
 
   const signOut = (): void => {
     setUserData({} as User);
