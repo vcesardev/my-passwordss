@@ -20,7 +20,7 @@ const Home: React.FC = () => {
     {} as BasePassword
   );
   const { passwords, addPassword, removePassword } = usePasswords();
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
 
   const [searchText, setSearchText] = useState<string>("");
 
@@ -85,6 +85,21 @@ const Home: React.FC = () => {
     ]);
   };
 
+  const handleToggleLogout = (): void => {
+    Alert.alert(
+      "Logout",
+      "Gostaria de fazer o logout? Todas as senhas salvas serão removidas!",
+      [
+        {
+          text: "Cancelar",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        { text: "OK", onPress: () => signOut() },
+      ]
+    );
+  };
+
   const handleDeletePassword = (data: BasePassword): void => {
     removePassword(data);
   };
@@ -92,7 +107,7 @@ const Home: React.FC = () => {
   return (
     <SafeKAV>
       <Styled.Container>
-        <PageHeader />
+        <PageHeader onPressLogout={handleToggleLogout} />
 
         <SearchInput
           onChangeText={setSearchText}

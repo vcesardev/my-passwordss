@@ -31,3 +31,5 @@ export const LogoTextContainer = styled.View`
 `;
 
 export const LogoutIcon = styled(LogoutSVG)``;
+
+export const LogoutTouchable = styled.TouchableOpacity``;

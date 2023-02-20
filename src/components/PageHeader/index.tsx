@@ -1,16 +1,25 @@
 import React from "react";
 import { View } from "react-native";
+import { useAuth } from "../../hooks/auth";
 
 import * as Styled from "./styled";
 
-const PageHeader: React.FC = () => {
+type HeaderProps = {
+  onPressLogout: () => void;
+};
+
+const PageHeader: React.FC<HeaderProps> = ({ onPressLogout }) => {
+  const { user } = useAuth();
+
   return (
     <Styled.Container>
       <Styled.LogoText>
         my{<Styled.DotText>.</Styled.DotText>}passwords
       </Styled.LogoText>
 
-      <Styled.LogoutIcon />
+      <Styled.LogoutTouchable onPress={onPressLogout}>
+        <Styled.LogoutIcon />
+      </Styled.LogoutTouchable>
     </Styled.Container>
   );
 };

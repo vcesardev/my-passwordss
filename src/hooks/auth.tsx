@@ -9,7 +9,12 @@ import axios from "axios";
 import { TokenResponse } from "expo-auth-session";
 import { User } from "../models/User";
 import * as LocalAuthenticate from "expo-local-authentication";
-import { retrieveUserData, storeUserData } from "../utils/store";
+import {
+  deleteUserData,
+  removePasswords,
+  retrieveUserData,
+  storeUserData,
+} from "../utils/store";
 
 type AuthProps = {
   user: User;
@@ -84,7 +89,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     loadUserStorage();
   }, [loadUserStorage]);
 
-  const signOut = (): void => {
+  const signOut = async (): Promise<void> => {
+    await removePasswords();
+    await deleteUserData();
     setUserData({} as User);
   };
 

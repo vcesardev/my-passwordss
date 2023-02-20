@@ -52,7 +52,7 @@ const Login: React.FC = () => {
             my<Styled.HeaderTitleOrange>.</Styled.HeaderTitleOrange>passwords
           </Styled.HeaderTitle>
           <Styled.HeaderSubheading>
-            as suas senhas estão aqui
+            suas senhas estão aqui
           </Styled.HeaderSubheading>
         </Styled.HeaderContainer>
 
