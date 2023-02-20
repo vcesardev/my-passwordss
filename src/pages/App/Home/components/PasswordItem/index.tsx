@@ -21,9 +21,9 @@ const PasswordItem: React.FC<PasswordItemProps> = ({
     <Styled.Container onPress={() => onPressItem(data)}>
       <Styled.HeaderContainer>
         <Styled.PasswordIcon fill={theme.colors.inputs} />
-        <TouchableOpacity onPress={() => onPressDelete(data)}>
+        <Styled.DeleteTouchable onPress={() => onPressDelete(data)}>
           <Styled.TrashIcon />
-        </TouchableOpacity>
+        </Styled.DeleteTouchable>
       </Styled.HeaderContainer>
 
       <Styled.Label>{data.label}</Styled.Label>

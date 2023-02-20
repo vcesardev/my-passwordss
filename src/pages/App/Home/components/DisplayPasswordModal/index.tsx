@@ -1,6 +1,8 @@
-import React, { useState } from "react";
-import { Modal } from "react-native";
+import React, { useState, useEffect } from "react";
+import { Modal, TouchableOpacity, Alert } from "react-native";
 import { BasePassword, PasswordPayload } from "../../../../../models/Password";
+
+import * as LocalAuthenticate from "expo-local-authentication";
 
 import * as Styled from "./styled";
 
@@ -15,17 +17,31 @@ const DisplayPasswordModal: React.FC<PasswordModalProps> = ({
   onRequestClose,
   data,
 }) => {
-  // const [label, setLabel] = useState<string>("");
-  // const [description, setDescription] = useState<string>("");
+  const [loading, setLoading] = useState(true);
 
-  // const handleFormData = (): void => {
-  //   if (label.length < 1 || description.length < 1) {
-  //     return;
-  //   }
+  const displayErrorAuthentication = () =>
+    Alert.alert(
+      "Erro ao autenticar",
+      "Não foi possível autenticar o usuário, tente novamente em breve."
+    );
 
-  //   onSendFormData({ description: description, label: label });
-  // };
-  console.log(data);
+  const handleDisplayData = async (): Promise<void> => {
+    try {
+      const response = await LocalAuthenticate.authenticateAsync({
+        promptMessage: "Confirme sua identidade!",
+      });
+      if (response.success === true) {
+        setLoading(false);
+      } else {
+        displayErrorAuthentication();
+        onRequestClose();
+      }
+    } catch (e) {}
+  };
+
+  useEffect(() => {
+    handleDisplayData();
+  }, []);
 
   return (
     <Modal
@@ -37,19 +53,28 @@ const DisplayPasswordModal: React.FC<PasswordModalProps> = ({
       <Styled.ModalContainer>
         <Styled.ModalBackground onPressIn={onRequestClose} />
         <Styled.ContainerData>
-          <Styled.CloseIcon onPress={onRequestClose} />
+          {loading ? (
+            <Styled.LoaderContainer>
+              <Styled.Loader />
+            </Styled.LoaderContainer>
+          ) : (
+            <>
+              <Styled.CloseTouchable onPress={onRequestClose}>
+                <Styled.CloseIcon onPress={onRequestClose} />
+              </Styled.CloseTouchable>
 
-          <Styled.HeaderLabel>Adicione uma nova senha</Styled.HeaderLabel>
+              <Styled.HeaderLabel>Sua Senha</Styled.HeaderLabel>
 
-          <Styled.InputLabel>Nome do campo</Styled.InputLabel>
-          <Styled.Input value={data.label} disabled />
+              <Styled.InputLabel>Nome do campo</Styled.InputLabel>
+              <Styled.Input value={data.label} editable={false} />
 
-          <Styled.InputLabel>Informações</Styled.InputLabel>
-          <Styled.DescriptionInput value={data.description} disabled />
-
-          {/* <Styled.AddButton onPress={handleFormData}>
-            <Styled.ButtonText>Adicionar</Styled.ButtonText>
-          </Styled.AddButton> */}
+              <Styled.InputLabel>Informações</Styled.InputLabel>
+              <Styled.DescriptionInput
+                value={data.description}
+                editable={false}
+              />
+            </>
+          )}
         </Styled.ContainerData>
       </Styled.ModalContainer>
     </Modal>

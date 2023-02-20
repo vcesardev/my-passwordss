@@ -67,6 +67,10 @@ export const ButtonText = styled(TextH1)`
   color: ${({ theme }) => theme.colors.white};
 `;
 
+export const CloseTouchable = styled.TouchableOpacity`
+  align-self: flex-end;
+`;
+
 export const CloseIcon = styled(CloseSVG).attrs(({ theme }) => ({
   fill: theme.colors.black,
 }))`

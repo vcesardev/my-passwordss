@@ -4,14 +4,9 @@ import { useTheme } from "styled-components";
 
 import * as Styled from "./styled";
 
-type SearchInputProps = TextInputProps & {
-  onPressSearch: () => void;
-};
+type SearchInputProps = TextInputProps & {};
 
-const SearchInput: React.FC<SearchInputProps> = ({
-  onPressSearch,
-  ...props
-}) => {
+const SearchInput: React.FC<SearchInputProps> = ({ ...props }) => {
   const theme = useTheme();
 
   return (
@@ -23,7 +18,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
           {...props}
         />
 
-        <Styled.SearchIcon fill={theme.colors.inputs} onPress={onPressSearch} />
+        <Styled.SearchIcon fill={theme.colors.inputs} />
       </Styled.SearchInputContainer>
     </Styled.Container>
   );

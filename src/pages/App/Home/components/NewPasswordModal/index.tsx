@@ -36,7 +36,9 @@ const NewPasswordModal: React.FC<PasswordModalProps> = ({
       <Styled.ModalContainer>
         <Styled.ModalBackground onPressIn={onRequestClose} />
         <Styled.ContainerData>
-          <Styled.CloseIcon onPress={onRequestClose} />
+          <Styled.CloseTouchable onPress={onRequestClose}>
+            <Styled.CloseIcon onPress={onRequestClose} />
+          </Styled.CloseTouchable>
 
           <Styled.HeaderLabel>Adicione uma nova senha</Styled.HeaderLabel>
 

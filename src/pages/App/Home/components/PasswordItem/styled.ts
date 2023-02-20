@@ -35,3 +35,12 @@ export const HeaderContainer = styled.View`
   flex-direction: row;
   justify-content: space-between;
 `;
+
+export const DeleteTouchable = styled.TouchableOpacity.attrs(() => ({
+  hitSlop: {
+    top: heightPercentageToDP("2%"),
+    bottom: heightPercentageToDP("2%"),
+    left: widthPercentageToDP("4%"),
+    right: widthPercentageToDP("4%"),
+  },
+}))``;

@@ -74,3 +74,15 @@ export const CloseIcon = styled(CloseSVG).attrs(({ theme }) => ({
   margin-top: ${heightPercentageToDP("2%")}px;
   margin-right: ${widthPercentageToDP("10%")}px;
 `;
+
+export const CloseTouchable = styled.TouchableOpacity`
+  align-self: flex-end;
+`;
+
+export const LoaderContainer = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const Loader = styled.ActivityIndicator``;

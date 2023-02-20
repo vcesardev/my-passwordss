@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, Alert } from "react-native";
 import PageHeader from "../../../components/PageHeader";
 import SafeKAV from "../../../components/SafeKAV";
 import { useAuth } from "../../../hooks/auth";
@@ -40,10 +40,6 @@ const Home: React.FC = () => {
     password.label.includes(searchText)
   );
 
-  useEffect(() => {
-    console.log(filteredUserPasswords);
-  }, [filteredUserPasswords]);
-
   const handleFormData = async (data: PasswordPayload): Promise<void> => {
     try {
       addPassword(data);
@@ -78,8 +74,15 @@ const Home: React.FC = () => {
     );
   };
 
-  const handleSearchPress = (): void => {
-    console.log("press");
+  const handleToggleDelete = (data: BasePassword): void => {
+    Alert.alert("Deletar senha", "Você gostaria de deletar esta senha?", [
+      {
+        text: "Cancelar",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      { text: "OK", onPress: () => handleDeletePassword(data) },
+    ]);
   };
 
   const handleDeletePassword = (data: BasePassword): void => {
@@ -94,7 +97,7 @@ const Home: React.FC = () => {
         <SearchInput
           onChangeText={setSearchText}
           value={searchText}
-          onPressSearch={handleSearchPress}
+          //onPressSearch={handleSearchPress}
         />
 
         <Styled.PasswordsContainer>
@@ -115,7 +118,7 @@ const Home: React.FC = () => {
                 renderItem={({ item }) => (
                   <PasswordItem
                     onPressItem={() => handlePasswordInfo(item)}
-                    onPressDelete={() => handleDeletePassword(item)}
+                    onPressDelete={() => handleToggleDelete(item)}
                     data={item}
                   />
                 )}
