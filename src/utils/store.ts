@@ -47,5 +47,7 @@ export const retrievePasswords = async (): Promise<BasePassword[] | null> => {
 export const removePasswords = async (): Promise<void> => {
   try {
     await AsyncStorage.removeItem(passwordsKey);
-  } catch (e) {}
+  } catch (e) {
+    console.log(e);
+  }
 };

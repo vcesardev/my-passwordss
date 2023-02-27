@@ -19,7 +19,8 @@ const Home: React.FC = () => {
   const [passwordData, setPasswordData] = useState<BasePassword>(
     {} as BasePassword
   );
-  const { passwords, addPassword, removePassword } = usePasswords();
+  const { passwords, addPassword, removePassword, deletePasswords } =
+    usePasswords();
   const { user, signOut } = useAuth();
 
   const [searchText, setSearchText] = useState<string>("");
@@ -85,6 +86,11 @@ const Home: React.FC = () => {
     ]);
   };
 
+  const handleLogout = (): void => {
+    signOut();
+    deletePasswords();
+  };
+
   const handleToggleLogout = (): void => {
     Alert.alert(
       "Logout",
@@ -95,7 +101,7 @@ const Home: React.FC = () => {
           onPress: () => console.log("Cancel Pressed"),
           style: "cancel",
         },
-        { text: "OK", onPress: () => signOut() },
+        { text: "OK", onPress: () => handleLogout() },
       ]
     );
   };
