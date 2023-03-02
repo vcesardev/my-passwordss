@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import React, { useState } from "react";
 import { FlatList, Alert } from "react-native";
 import PageHeader from "../../../components/PageHeader";
 import SafeKAV from "../../../components/SafeKAV";
 import { useAuth } from "../../../hooks/auth";
 import { usePasswords } from "../../../hooks/passwords";
-import { BasePassword, PasswordPayload } from "../../../models/Password";
+import { BasePassword } from "../../../models/Password";
 import { theme } from "../../../theme";
 import DisplayPasswordModal from "./components/DisplayPasswordModal";
 import NewPasswordModal from "./components/NewPasswordModal";
@@ -14,7 +15,6 @@ import SearchInput from "./components/SearchInput";
 import * as Styled from "./styled";
 
 const Home: React.FC = () => {
-  const [passwordModalVisible, setPasswordModalVisible] = useState(false);
   const [displayPassword, setDisplayPassword] = useState(false);
   const [passwordData, setPasswordData] = useState<BasePassword>(
     {} as BasePassword
@@ -22,11 +22,13 @@ const Home: React.FC = () => {
   const { passwords, addPassword, removePassword, deletePasswords } =
     usePasswords();
   const { user, signOut } = useAuth();
+  const { navigate } = useNavigation();
 
   const [searchText, setSearchText] = useState<string>("");
 
   const handleModalDisplay = (): void => {
-    setPasswordModalVisible(!passwordModalVisible);
+    // setPasswordModalVisible(!passwordModalVisible);
+    navigate("AddPassword");
   };
 
   const handleDisplayPasswordModal = (): void => {
@@ -37,28 +39,9 @@ const Home: React.FC = () => {
     (password) => password.userId === user.id
   );
 
-  const filteredUserPasswords = userPasswords.filter((password) =>
+  const filteredUserPasswords = passwords.filter((password) =>
     password.label.includes(searchText)
   );
-
-  const handleFormData = async (data: PasswordPayload): Promise<void> => {
-    try {
-      addPassword(data);
-      handleModalDisplay();
-    } catch (e) {
-      return;
-    }
-  };
-
-  const showPasswordModal = (): JSX.Element => {
-    return (
-      <NewPasswordModal
-        isVisible={passwordModalVisible}
-        onRequestClose={handleModalDisplay}
-        onSendFormData={handleFormData}
-      />
-    );
-  };
 
   const handlePasswordInfo = (data: BasePassword) => {
     handleDisplayPasswordModal();
@@ -135,7 +118,7 @@ const Home: React.FC = () => {
 
             <Styled.PasswordsDataContainer>
               <FlatList
-                data={searchText ? filteredUserPasswords : userPasswords}
+                data={searchText ? filteredUserPasswords : passwords}
                 renderItem={({ item }) => (
                   <PasswordItem
                     onPressItem={() => handlePasswordInfo(item)}
@@ -154,7 +137,6 @@ const Home: React.FC = () => {
           <Styled.AddIcon fill={theme.colors.white} />
         </Styled.NewPasswordContainer>
       </Styled.Container>
-      {passwordModalVisible && showPasswordModal()}
       {displayPassword && displayPasswordModal()}
     </SafeKAV>
   );
