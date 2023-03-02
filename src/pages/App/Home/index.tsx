@@ -35,10 +35,6 @@ const Home: React.FC = () => {
     setDisplayPassword(!displayPassword);
   };
 
-  const userPasswords = passwords.filter(
-    (password) => password.userId === user.id
-  );
-
   const filteredUserPasswords = passwords.filter((password) =>
     password.label.includes(searchText)
   );
@@ -109,9 +105,7 @@ const Home: React.FC = () => {
             <Styled.HeaderContainer>
               <Styled.HeaderLabel>Senhas</Styled.HeaderLabel>
               <Styled.PasswordsAmount>
-                {searchText
-                  ? filteredUserPasswords.length
-                  : userPasswords.length}{" "}
+                {searchText ? filteredUserPasswords.length : passwords.length}{" "}
                 Senhas
               </Styled.PasswordsAmount>
             </Styled.HeaderContainer>
