@@ -1,7 +1,8 @@
 import { createStackNavigator } from "@react-navigation/stack";
+import AddPassword from "../pages/App/AddPassword";
 import Home from "../pages/App/Home";
 
-const App = createStackNavigator();
+const AppStack = createStackNavigator();
 
 const AppRoutes: React.FC = () => {
   const screenOptions = {
@@ -9,10 +10,11 @@ const AppRoutes: React.FC = () => {
   };
 
   return (
-    <App.Navigator screenOptions={screenOptions}>
-      <App.Screen name="Home" component={Home} />
-    </App.Navigator>
+    <AppStack.Navigator screenOptions={screenOptions} initialRouteName="Home">
+      <AppStack.Screen name="Home" component={Home} />
+      <AppStack.Screen name="AddPassword" component={AddPassword} />
+    </AppStack.Navigator>
   );
 };
 
-export default AppRoutes;
+export { AppRoutes };
