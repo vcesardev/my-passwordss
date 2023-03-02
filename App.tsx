@@ -1,4 +1,4 @@
-import { StatusBar } from "expo-status-bar";
+import { SafeAreaView, StatusBar } from "react-native";
 import React from "react";
 import AppLoading from "expo-app-loading";
 import { useFonts, Roboto_400Regular } from "@expo-google-fonts/roboto";
@@ -12,6 +12,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { AuthProvider, useAuth } from "./src/hooks/auth";
 import Router from "./src/routes";
 import { PasswordProvider } from "./src/hooks/passwords";
+import SafeKAV from "./src/components/SafeKAV";
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -32,8 +33,10 @@ export default function App() {
                 style="light"
                 backgroundColor={themeData.colors.purple}
               />
-
-              <Router />
+              <SafeAreaView style={{ flex: 0, backgroundColor: "#6548A3" }} />
+              <SafeKAV>
+                <Router />
+              </SafeKAV>
             </ThemeProvider>
           </PasswordProvider>
         </AuthProvider>
