@@ -1,15 +1,13 @@
-import { useNavigation } from "@react-navigation/native";
-import React, { useState, useRef } from "react";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import React, { useState, useCallback } from "react";
 import { FlatList, Alert } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import PageHeader from "../../../components/PageHeader";
-import SafeKAV from "../../../components/SafeKAV";
 import { useAuth } from "../../../hooks/auth";
 import { usePasswords } from "../../../hooks/passwords";
 import { BasePassword } from "../../../models/Password";
 import { theme } from "../../../theme";
 import DisplayPasswordModal from "./components/DisplayPasswordModal";
-import NewPasswordModal from "./components/NewPasswordModal";
 import PasswordItem from "./components/PasswordItem";
 import SearchInput from "./components/SearchInput";
 
@@ -22,7 +20,7 @@ const Home: React.FC = () => {
   const [passwordData, setPasswordData] = useState<BasePassword>(
     {} as BasePassword
   );
-  const { passwords, addPassword, removePassword, deletePasswords } =
+  const { passwords, removePassword, deletePasswords, loadUserPasswords } =
     usePasswords();
   const { user, signOut } = useAuth();
   const { navigate } = useNavigation();
@@ -69,8 +67,8 @@ const Home: React.FC = () => {
   };
 
   const handleLogout = (): void => {
-    signOut();
     deletePasswords();
+    signOut();
   };
 
   const handleToggleLogout = (): void => {
@@ -95,6 +93,12 @@ const Home: React.FC = () => {
   const handleInputPress = (): void => {
     inputRef?.current?.focus();
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      loadUserPasswords();
+    }, [])
+  );
 
   return (
     <Styled.Container>

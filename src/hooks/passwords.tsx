@@ -43,7 +43,6 @@ export const PasswordProvider: React.FC<PasswordProviderProps> = ({
       previousPasswords.push(payload);
 
       await storePasswords(previousPasswords);
-
       setPasswords(previousPasswords);
     } catch (e) {
       console.log(e);
@@ -62,7 +61,6 @@ export const PasswordProvider: React.FC<PasswordProviderProps> = ({
     try {
       if (!user) return;
       const data = await retrievePasswords();
-
       if (data) {
         //await storeUserData(data);
 
@@ -76,10 +74,6 @@ export const PasswordProvider: React.FC<PasswordProviderProps> = ({
   const deletePasswords = (): void => {
     setPasswords([]);
   };
-
-  useEffect(() => {
-    loadUserPasswords();
-  }, [loadUserPasswords]);
 
   return (
     <PasswordsContext.Provider
