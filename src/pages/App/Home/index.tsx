@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { FlatList, Alert } from "react-native";
+import { TextInput } from "react-native-gesture-handler";
 import PageHeader from "../../../components/PageHeader";
 import SafeKAV from "../../../components/SafeKAV";
 import { useAuth } from "../../../hooks/auth";
@@ -15,6 +16,8 @@ import SearchInput from "./components/SearchInput";
 import * as Styled from "./styled";
 
 const Home: React.FC = () => {
+  const inputRef = React.createRef<TextInput>();
+
   const [displayPassword, setDisplayPassword] = useState(false);
   const [passwordData, setPasswordData] = useState<BasePassword>(
     {} as BasePassword
@@ -89,50 +92,55 @@ const Home: React.FC = () => {
     removePassword(data);
   };
 
+  const handleInputPress = (): void => {
+    inputRef?.current?.focus();
+  };
+
   return (
-    <SafeKAV>
-      <Styled.Container>
-        <PageHeader onPressLogout={handleToggleLogout} />
+    <Styled.Container>
+      <PageHeader onPressLogout={handleToggleLogout} />
 
-        <SearchInput
-          onChangeText={setSearchText}
-          value={searchText}
-          //onPressSearch={handleSearchPress}
-        />
+      <SearchInput
+        onChangeText={setSearchText}
+        value={searchText}
+        innerRef={inputRef}
+        onPressInput={handleInputPress}
 
-        <Styled.PasswordsContainer>
-          <Styled.PasswordWrapper>
-            <Styled.HeaderContainer>
-              <Styled.HeaderLabel>Senhas</Styled.HeaderLabel>
-              <Styled.PasswordsAmount>
-                {searchText ? filteredUserPasswords.length : passwords.length}{" "}
-                Senhas
-              </Styled.PasswordsAmount>
-            </Styled.HeaderContainer>
+        //onPressSearch={handleSearchPress}
+      />
 
-            <Styled.PasswordsDataContainer>
-              <FlatList
-                data={searchText ? filteredUserPasswords : passwords}
-                renderItem={({ item }) => (
-                  <PasswordItem
-                    onPressItem={() => handlePasswordInfo(item)}
-                    onPressDelete={() => handleToggleDelete(item)}
-                    data={item}
-                  />
-                )}
-                keyExtractor={(item) => item.id}
-                numColumns={2}
-              />
-            </Styled.PasswordsDataContainer>
-          </Styled.PasswordWrapper>
-        </Styled.PasswordsContainer>
+      <Styled.PasswordsContainer>
+        <Styled.PasswordWrapper>
+          <Styled.HeaderContainer>
+            <Styled.HeaderLabel>Senhas</Styled.HeaderLabel>
+            <Styled.PasswordsAmount>
+              {searchText ? filteredUserPasswords.length : passwords.length}{" "}
+              Senhas
+            </Styled.PasswordsAmount>
+          </Styled.HeaderContainer>
 
-        <Styled.NewPasswordContainer onPress={handleModalDisplay}>
-          <Styled.AddIcon fill={theme.colors.white} />
-        </Styled.NewPasswordContainer>
-      </Styled.Container>
+          <Styled.PasswordsDataContainer>
+            <FlatList
+              data={searchText ? filteredUserPasswords : passwords}
+              renderItem={({ item }) => (
+                <PasswordItem
+                  onPressItem={() => handlePasswordInfo(item)}
+                  onPressDelete={() => handleToggleDelete(item)}
+                  data={item}
+                />
+              )}
+              keyExtractor={(item) => item.id}
+              numColumns={2}
+            />
+          </Styled.PasswordsDataContainer>
+        </Styled.PasswordWrapper>
+      </Styled.PasswordsContainer>
+
+      <Styled.NewPasswordContainer onPress={handleModalDisplay}>
+        <Styled.AddIcon fill={theme.colors.white} />
+      </Styled.NewPasswordContainer>
       {displayPassword && displayPasswordModal()}
-    </SafeKAV>
+    </Styled.Container>
   );
 };
 

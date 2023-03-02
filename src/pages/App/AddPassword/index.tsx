@@ -27,35 +27,33 @@ const AddPassword: React.FC = () => {
   };
 
   return (
-    <SafeKAV>
-      <Styled.ModalContainer>
-        <Styled.ScrollViewContainer>
-          <Styled.ContainerData>
-            <Styled.HeaderContainer>
-              <TouchableOpacity onPress={goBack}>
-                <Styled.BackIcon />
-              </TouchableOpacity>
+    <Styled.ModalContainer>
+      <Styled.ScrollViewContainer>
+        <Styled.ContainerData>
+          <Styled.HeaderContainer>
+            <TouchableOpacity onPress={goBack}>
+              <Styled.BackIcon />
+            </TouchableOpacity>
 
-              <Styled.HeaderLabel>Nova Senha</Styled.HeaderLabel>
-              <View />
-            </Styled.HeaderContainer>
+            <Styled.HeaderLabel>Nova Senha</Styled.HeaderLabel>
+            <View />
+          </Styled.HeaderContainer>
 
-            <Styled.InputLabel>Nome do campo</Styled.InputLabel>
-            <Styled.Input value={label} onChangeText={setLabel} />
+          <Styled.InputLabel>Nome do campo</Styled.InputLabel>
+          <Styled.Input value={label} onChangeText={setLabel} />
 
-            <Styled.InputLabel>Informações</Styled.InputLabel>
-            <Styled.DescriptionInput
-              value={description}
-              onChangeText={setDescription}
-            />
+          <Styled.InputLabel>Informações</Styled.InputLabel>
+          <Styled.DescriptionInput
+            value={description}
+            onChangeText={setDescription}
+          />
 
-            <Styled.AddButton onPress={handleFormData}>
-              <Styled.ButtonText>Adicionar</Styled.ButtonText>
-            </Styled.AddButton>
-          </Styled.ContainerData>
-        </Styled.ScrollViewContainer>
-      </Styled.ModalContainer>
-    </SafeKAV>
+          <Styled.AddButton onPress={handleFormData}>
+            <Styled.ButtonText>Adicionar</Styled.ButtonText>
+          </Styled.AddButton>
+        </Styled.ContainerData>
+      </Styled.ScrollViewContainer>
+    </Styled.ModalContainer>
   );
 };
 

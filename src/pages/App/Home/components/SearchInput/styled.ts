@@ -6,7 +6,7 @@ import {
   widthPercentageToDP,
 } from "../../../../../utils";
 
-export const Container = styled.View`
+export const Container = styled.TouchableOpacity`
   background-color: ${({ theme }) => theme.colors.purple};
   padding-bottom: ${heightPercentageToDP("9%")}px;
 `;
