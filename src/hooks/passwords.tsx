@@ -16,6 +16,7 @@ type PasswordProps = {
   addPassword: (data: PasswordPayload) => void;
   removePassword: (data: BasePassword) => void;
   deletePasswords: () => void;
+  loadUserPasswords: () => void;
 };
 
 type PasswordProviderProps = {
@@ -70,7 +71,7 @@ export const PasswordProvider: React.FC<PasswordProviderProps> = ({
     } catch (err: any) {
       console.log(err);
     }
-  }, []);
+  }, [passwords]);
 
   const deletePasswords = (): void => {
     setPasswords([]);
@@ -82,7 +83,13 @@ export const PasswordProvider: React.FC<PasswordProviderProps> = ({
 
   return (
     <PasswordsContext.Provider
-      value={{ passwords, addPassword, removePassword, deletePasswords }}
+      value={{
+        passwords,
+        addPassword,
+        removePassword,
+        deletePasswords,
+        loadUserPasswords,
+      }}
     >
       {children}
     </PasswordsContext.Provider>
