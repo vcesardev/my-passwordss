@@ -10,13 +10,13 @@ import * as Styled from "./styled";
 import axios from "axios";
 import { TokenResponse } from "expo-auth-session";
 import { useAuth } from "../../../hooks/auth";
+import { expoClientId } from "../../../../config";
 
 const Login: React.FC = () => {
   const { signIn } = useAuth();
   const animation = useRef(null);
   const [request, response, promptAsync] = Google.useAuthRequest({
-    expoClientId:
-      "573714968934-9s4k2n1hr7tg2vud7jrq5mrqa6nhk69m.apps.googleusercontent.com",
+    expoClientId: expoClientId,
     // iosClientId: "GOOGLE_GUID.apps.googleusercontent.com",
     // androidClientId: "GOOGLE_GUID.apps.googleusercontent.com",
     // webClientId: "GOOGLE_GUID.apps.googleusercontent.com",
